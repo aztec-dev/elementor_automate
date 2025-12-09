@@ -3,14 +3,21 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='styles.css')}}"
+    />
+    <link rel="stylesheet" href="../static/styles.css" />
     <title>Elementor Automate</title>
   </head>
   <body>
-    <h1>WP Elementor Blog Automation</h1>
-    <div>
-      <h2>WP Credentials</h2>
-      <form method="post" action="/check_wp_cred">
-        <label for="site">Wordpress Site</label>
+    <h1 class="heading text-center">WP Elementor Blog Automation</h1>
+    <div class="container flex flex-col align-left">
+      <span class="align-center-child"
+        ><h2 class="text-center">WP Credentials</h2></span
+      >
+      <form class="form flex flex-col" method="post" action="">
+        <label for="site">Wordpress Site:</label>
         <input type="text" placeholder="www.example.com" name="site" />
         <label for="username">WP Username:</label>
         <input type="text" placeholder="wpAdmin" name="username" />
@@ -19,6 +26,11 @@
           placeholder="x4Jp n0KQ VZcA 2Lm8 D7wF mYtE"
           name="account_password"
         />
+        <p class="tooltip">
+          Make sure this information is correct as it connects the app to your
+          WordPress site* <br />
+          We do not save or keep any data/information provided.*
+        </p>
         <button type="submit">Continue</button>
       </form>
     </div>

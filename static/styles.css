@@ -1,4 +1,79 @@
 :root {
+  /* variables */
+  --box-shadow-color: #4a4a4a;
+  --card-bg: #f2f5f7;
+  --accent: #2c88d9;
   font-family: sans-serif; /* San-serif is just goated imo */
   margin: 15px;
+  font-size: 16px;
+}
+
+/* for styling references */
+.temp-border {
+  border: 2px solid red;
+}
+
+.container {
+  background-color: var(--card-bg);
+  border-radius: 1rem;
+  padding: 1rem;
+  margin: auto;
+  box-shadow: 2px 2px 5px var(--box-shadow-color);
+  align-items: center;
+  width: 90%;
+  max-width: 900px;
+  box-sizing: border-box;
+}
+
+/* Form styling */
+.form {
+  padding: 1.5rem;
+  width: fit-content;
+  gap: 0.5rem;
+}
+.form label {
+  font-size: 22px;
+  font-weight: bold;
+  display: block;
+  margin-top: 0.25rem;
+  margin-bottom: 0.25rem;
+}
+.form button {
+  background-color: var(--accent);
+  border: none;
+  border-radius: 3px;
+  padding: 0.5rem;
+  margin: 0.5rem 0; /* top bottom: 0.5rem, left right 0 */
+  color: white;
+  width: fit-content;
+}
+.form input {
+  height: 2rem;
+}
+
+.tooltip {
+  font-weight: 200;
+  font-style: italic;
+  font-size: x-small;
+}
+/* Helper classes */
+.flex {
+  display: flex;
+}
+.flex-col {
+  flex-direction: column;
+  flex: auto;
+}
+.heading {
+  font-weight: bolder;
+  font-size: 34px;
+}
+.text-center {
+  text-align: center;
+}
+.align-left {
+  align-items: start;
+}
+.align-center-child {
+  align-self: center;
 }
