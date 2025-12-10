@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Upload Result - WordPress Automation</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='styles.css') }}"
+    />
+  </head>
+  <body>
+    <div class="container flex flex-col align-left">
+      <h2 class="text-center">Upload Result</h2>
+
+      {% if result.success %}
+      <div class="banner banner-success">
+        <p style="margin: 0">
+          ✓ Post created successfully! {% if result.ai_generated %}
+          <span class="badge badge-info" style="margin-left: 0.5rem"
+            >🤖 AI Generated</span
+          >
+          {% endif %}
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Post Details</h3>
+        <p><strong>Title:</strong> {{ result.title }}</p>
+        <p>
+          <strong>Status:</strong>
+          <span class="badge">{{ result.status }}</span>
+        </p>
+        <p><strong>Post ID:</strong> {{ result.post_id }}</p>
+        {% if result.ai_generated %}
+        <p><strong>Source:</strong> 🤖 AI Generated Content</p>
+        {% endif %}
+      </div>
+
+      {% if result.uploaded_images %}
+      <div class="card">
+        <h3>Uploaded Media ({{ result.uploaded_images|length }})</h3>
+        <ul style="list-style: none; padding: 0; margin: 1rem 0">
+          {% for media in result.uploaded_images %}
+          <li
+            style="
+              background: var(--bg-secondary);
+              padding: 0.75rem;
+              margin: 0.5rem 0;
+              border-radius: 0.5rem;
+              display: flex;
+              align-items: center;
+              gap: 0.75rem;
+              border: 1px solid var(--border-color);
+            "
+          >
+            <img
+              src="{{ media.url }}"
+              alt="{{ media.filename }}"
+              style="
+                width: 60px;
+                height: 60px;
+                object-fit: cover;
+                border-radius: 0.375rem;
+              "
+            />
+            <div>
+              <div style="font-weight: 600; color: var(--text-primary)">
+                {{ media.filename }}
+              </div>
+              <div style="font-size: 0.875rem; color: var(--text-muted)">
+                ID: {{ media.id }}
+              </div>
+            </div>
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+      {% endif %}
+
+      <div class="nav-links mt-4">
+        <a href="{{ result.post_url }}" target="_blank">View Post →</a>
+        {% if result.ai_generated %}
+        <a href="/generate-ai">Generate Another</a>
+        {% else %}
+        <a href="/upload">Upload Another</a>
+        {% endif %}
+      </div>
+
+      {% else %}
+      <div class="banner banner-error">
+        <p style="margin: 0; font-weight: 600">✗ Upload failed</p>
+        <p style="margin: 0.5rem 0 0 0">
+          <strong>Error:</strong> {{ result.error }}
+        </p>
+      </div>
+
+      {% if result.details %}
+      <div class="card">
+        <h3>Error Details</h3>
+        <pre
+          style="
+            background: var(--bg-tertiary);
+            padding: 1rem;
+            border-radius: 0.5rem;
+            overflow-x: auto;
+            color: var(--text-secondary);
+          "
+        >
+{{ result.details }}</pre
+        >
+      </div>
+      {% endif %}
+
+      <div class="nav-links mt-4">
+        <a href="/upload">Try Again</a>
+        <a href="/">Go Home</a>
+      </div>
+      {% endif %}
+
+      <div class="text-center mt-4">
+        <a href="/">← Back to Home</a>
+      </div>
+    </div>
+  </body>
+</html>

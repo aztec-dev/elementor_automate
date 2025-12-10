@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI Content Generator - WordPress Automation</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='styles.css') }}"
+    />
+  </head>
+  <body>
+    <div class="container flex flex-col align-left">
+      <h2 class="text-center">🤖 AI Content Generator</h2>
+
+      {% with messages = get_flashed_messages(with_categories=true) %} {% if
+      messages %} {% for category, message in messages %}
+      <div class="banner banner-{{ category }}">{{ message }}</div>
+      {% endfor %} {% endif %} {% endwith %}
+
+      <div class="banner banner-info">
+        <strong>💡 How it works:</strong> Enter a topic or prompt, WordPress
+        credentials, and AI will generate a complete blog post and upload it
+        directly to your WordPress site!
+      </div>
+
+      <form class="form flex flex-col" method="post" action="/generate-ai">
+        <div class="section">
+          <h3>WordPress Credentials</h3>
+
+          <label for="site">WordPress Site URL:</label>
+          <input
+            type="text"
+            placeholder="https://example.com"
+            name="site"
+            required
+          />
+
+          <label for="username">WP Username:</label>
+          <input type="text" placeholder="wpAdmin" name="username" required />
+
+          <label for="account_password">WP Application Password:</label>
+          <input
+            type="password"
+            placeholder="xxxx xxxx xxxx xxxx"
+            name="account_password"
+            required
+          />
+
+          <p class="tooltip">
+            Create an application password in WordPress: Users → Profile →
+            Application Passwords<br />
+            We do not save or store any credentials.*
+          </p>
+        </div>
+
+        <div class="section mt-3">
+          <h3>Content Settings</h3>
+
+          <label for="prompt">What should the blog post be about?</label>
+          <textarea
+            name="prompt"
+            placeholder="Example: Write a comprehensive guide about setting up a WordPress blog for beginners..."
+            rows="4"
+            required
+          ></textarea>
+
+          <label>Writing Tone:</label>
+          <div class="radio-group">
+            <label>
+              <input type="radio" name="tone" value="professional" checked />
+              <span>Professional</span>
+            </label>
+            <label>
+              <input type="radio" name="tone" value="casual" />
+              <span>Casual</span>
+            </label>
+            <label>
+              <input type="radio" name="tone" value="technical" />
+              <span>Technical</span>
+            </label>
+            <label>
+              <input type="radio" name="tone" value="friendly" />
+              <span>Friendly</span>
+            </label>
+          </div>
+
+          <label>Post Length:</label>
+          <div class="radio-group">
+            <label>
+              <input type="radio" name="length" value="short" />
+              <span>Short (~500 words)</span>
+            </label>
+            <label>
+              <input type="radio" name="length" value="medium" checked />
+              <span>Medium (~1000 words)</span>
+            </label>
+            <label>
+              <input type="radio" name="length" value="long" />
+              <span>Long (~2000 words)</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="section mt-3">
+          <h3>Metadata (Optional)</h3>
+
+          <label for="categories">Suggested Categories:</label>
+          <input
+            type="text"
+            name="categories"
+            placeholder="Tutorial, WordPress, Technology"
+          />
+
+          <label for="tags">Suggested Tags:</label>
+          <input
+            type="text"
+            name="tags"
+            placeholder="blogging, cms, web development"
+          />
+
+          <div class="checkbox-group">
+            <label>
+              <input type="checkbox" name="include_seo" value="yes" checked />
+              <span>Include SEO metadata (title, description, keywords)</span>
+            </label>
+          </div>
+
+          <p class="tooltip">
+            AI will generate appropriate categories and tags if not specified.
+            SEO metadata includes optimized title, meta description, and
+            keywords.
+          </p>
+        </div>
+
+        <div class="section mt-3">
+          <h3>Post Options</h3>
+
+          <label for="post_status">Post Status:</label>
+          <select name="post_status">
+            <option value="draft" selected>Draft</option>
+            <option value="publish">Publish Immediately</option>
+            <option value="pending">Pending Review</option>
+          </select>
+
+          <div class="checkbox-group">
+            <label>
+              <input type="checkbox" name="use_elementor" value="yes" />
+              <span>Enable Elementor page builder support</span>
+            </label>
+            <label>
+              <input type="checkbox" name="download_only" value="yes" />
+              <span>Download markdown only (don't upload to WordPress)</span>
+            </label>
+          </div>
+
+          <p class="tooltip">
+            Check "Download only" if you want to review/edit the markdown before
+            uploading manually.
+          </p>
+        </div>
+
+        <button type="submit">✨ Generate & Upload to WordPress</button>
+      </form>
+
+      <div class="banner banner-info mt-4">
+        <p style="margin: 0">
+          ⚠️ Requires OpenAI API key configured in
+          <code
+            style="
+              background: rgba(0, 0, 0, 0.1);
+              padding: 0.2rem 0.4rem;
+              border-radius: 0.25rem;
+            "
+            >.env</code
+          >
+          file
+        </p>
+      </div>
+
+      <div class="text-center mt-3">
+        <a href="/">← Back to Home</a>
+      </div>
+    </div>
+
+    <div class="container mt-4">
+      <div class="section">
+        <h3>Setup Instructions</h3>
+        <ol
+          style="
+            line-height: 1.8;
+            padding-left: 1.5rem;
+            color: var(--text-secondary);
+          "
+        >
+          <li class="mb-2">
+            Get your OpenAI API key from
+            <a href="https://platform.openai.com/api-keys" target="_blank"
+              >platform.openai.com/api-keys</a
+            >
+          </li>
+          <li class="mb-2">
+            Create a
+            <code
+              style="
+                background: var(--bg-tertiary);
+                padding: 0.2rem 0.4rem;
+                border-radius: 0.25rem;
+              "
+              >.env</code
+            >
+            file in the project root (copy from
+            <code
+              style="
+                background: var(--bg-tertiary);
+                padding: 0.2rem 0.4rem;
+                border-radius: 0.25rem;
+              "
+              >.env.example</code
+            >)
+          </li>
+          <li class="mb-2">
+            Add:
+            <code
+              style="
+                background: var(--bg-tertiary);
+                padding: 0.2rem 0.4rem;
+                border-radius: 0.25rem;
+              "
+              >OPENAI_API_KEY=your-key-here</code
+            >
+          </li>
+          <li>Restart the Flask app</li>
+        </ol>
+      </div>
+
+      <div class="section mt-3">
+        <h3>Tips for Best Results</h3>
+        <ul
+          style="
+            line-height: 1.8;
+            padding-left: 1.5rem;
+            color: var(--text-secondary);
+          "
+        >
+          <li class="mb-1">
+            📝 Be specific in your prompt - mention target audience, key points,
+            and tone
+          </li>
+          <li class="mb-1">🎯 Include examples of what you want covered</li>
+          <li class="mb-1">
+            📊 Specify if you need code examples, statistics, or case studies
+          </li>
+          <li class="mb-1">
+            ✏️ You can edit the generated markdown before uploading to WordPress
+          </li>
+          <li>🔄 Regenerate if the first result isn't perfect</li>
+        </ul>
+      </div>
+    </div>
+  </body>
+</html>

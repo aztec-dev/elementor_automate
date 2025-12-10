@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Upload Blog Post - WordPress Automation</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='styles.css') }}"
+    />
+  </head>
+  <body>
+    <div class="container flex flex-col align-left">
+      <h2 class="text-center">📝 Upload Blog Post</h2>
+
+      <form
+        class="form flex flex-col"
+        method="post"
+        action="/upload_post"
+        enctype="multipart/form-data"
+      >
+        <!-- WordPress Credentials -->
+        <div class="section">
+          <h3>WordPress Credentials</h3>
+
+          <label for="site">WordPress Site URL:</label>
+          <input
+            type="text"
+            placeholder="https://example.com"
+            name="site"
+            required
+          />
+
+          <label for="username">WP Username:</label>
+          <input type="text" placeholder="wpAdmin" name="username" required />
+
+          <label for="account_password">WP Application Password:</label>
+          <input
+            type="password"
+            placeholder="xxxx xxxx xxxx xxxx"
+            name="account_password"
+            required
+          />
+
+          <p class="tooltip">
+            Create an application password in WordPress: Users → Profile →
+            Application Passwords<br />
+            We do not save or store any credentials.*
+          </p>
+        </div>
+
+        <!-- Post Content -->
+        <div class="section mt-3">
+          <h3>Post Content</h3>
+
+          <label for="markdown_file">Markdown File:</label>
+          <input
+            type="file"
+            name="markdown_file"
+            accept=".md,.markdown"
+            required
+          />
+
+          <p class="tooltip">
+            Upload a markdown file with YAML frontmatter containing title,
+            categories, tags, SEO metadata, etc.
+            <a href="/sample-markdown" target="_blank">View sample format</a>
+          </p>
+
+          <!-- Images -->
+          <label for="images">Upload Images (optional):</label>
+          <input type="file" name="images" accept="image/*" multiple />
+
+          <p class="tooltip">
+            Upload images referenced in your markdown file. They'll be uploaded
+            to WordPress media library first.
+          </p>
+        </div>
+
+        <!-- Options -->
+        <div class="section mt-3">
+          <h3>Post Options</h3>
+
+          <label for="post_status">Post Status:</label>
+          <select name="post_status">
+            <option value="draft" selected>Draft</option>
+            <option value="publish">Publish Immediately</option>
+            <option value="pending">Pending Review</option>
+          </select>
+
+          <div class="checkbox-group">
+            <label>
+              <input type="checkbox" name="use_elementor" value="yes" />
+              <span>Enable Elementor page builder support</span>
+            </label>
+          </div>
+        </div>
+
+        <p class="tooltip">
+          <p class="tooltip">
+            Check this if your WordPress site uses Elementor and you want the post to be editable with Elementor.
+          </p>
+        </div>
+
+        <button type="submit">Upload to WordPress</button>
+      </form>
+
+      <div class="text-center mt-4">
+        <a href="/">← Back to Home</a>
+      </div>
+    </div>
+  </body>
+</html>

@@ -7,32 +7,107 @@
       rel="stylesheet"
       href="{{ url_for('static', filename='styles.css')}}"
     />
-    <link rel="stylesheet" href="../static/styles.css" />
     <title>Elementor Automate</title>
   </head>
   <body>
-    <h1 class="heading text-center">WP Elementor Blog Automation</h1>
-    <div class="container flex flex-col align-left">
-      <span class="align-center-child"
-        ><h2 class="text-center">WP Credentials</h2></span
-      >
-      <form class="form flex flex-col" method="post" action="">
-        <label for="site">Wordpress Site:</label>
-        <input type="text" placeholder="www.example.com" name="site" />
-        <label for="username">WP Username:</label>
-        <input type="text" placeholder="wpAdmin" name="username" />
-        <label for="account_password">WP Account Password:</label>
-        <input
-          placeholder="x4Jp n0KQ VZcA 2Lm8 D7wF mYtE"
-          name="account_password"
-        />
-        <p class="tooltip">
-          Make sure this information is correct as it connects the app to your
-          WordPress site* <br />
-          We do not save or keep any data/information provided.*
-        </p>
-        <button type="submit">Continue</button>
-      </form>
+    <div class="container">
+      <h1 class="text-center">WP Elementor Blog Automation</h1>
+      <p class="text-center">
+        Automate your WordPress blog with AI-generated content or upload
+        markdown files
+      </p>
+
+      <!-- Navigation/Quick Actions -->
+      <div class="nav-links">
+        <a href="/generate-ai">🤖 AI Content Generator</a>
+        <a href="/upload">📝 Upload Blog Post</a>
+        <a href="/sample-markdown">📄 Download Sample</a>
+      </div>
+
+      <!-- Test WordPress Connection -->
+      <div class="section mt-4">
+        <h2>Test WordPress Connection</h2>
+        <form class="form flex flex-col" method="post" action="/check_wp_cred">
+          <label for="site">WordPress Site:</label>
+          <input type="text" placeholder="https://example.com" name="site" />
+
+          <label for="username">WP Username:</label>
+          <input type="text" placeholder="wpAdmin" name="username" />
+
+          <label for="account_password">WP Account Password:</label>
+          <input
+            type="password"
+            placeholder="x4Jp n0KQ VZcA 2Lm8 D7wF mYtE"
+            name="account_password"
+          />
+
+          <p class="tooltip">
+            Test your WordPress credentials. This will fetch your recent
+            posts.<br />
+            We do not save or keep any data/information provided.*
+          </p>
+          <button type="submit">Test Connection</button>
+        </form>
+      </div>
+
+      <!-- How It Works -->
+      <div class="section mt-4">
+        <h2>How It Works</h2>
+        <ol
+          style="
+            line-height: 1.8;
+            padding-left: 1.5rem;
+            color: var(--text-secondary);
+          "
+        >
+          <li class="mb-2">
+            <strong style="color: var(--text-primary)"
+              >Write your blog post</strong
+            >
+            in Markdown with YAML frontmatter (title, categories, tags, SEO
+            metadata)
+          </li>
+          <li class="mb-2">
+            <strong style="color: var(--text-primary)">Upload images</strong>
+            that you reference in the markdown
+          </li>
+          <li class="mb-2">
+            <strong style="color: var(--text-primary)">Submit the form</strong>
+            with your WordPress credentials
+          </li>
+          <li class="mb-2">
+            <strong style="color: var(--text-primary)">The app will:</strong>
+            <ul style="margin-top: 0.5rem; padding-left: 1.5rem">
+              <li>Upload all images to your WordPress media library</li>
+              <li>Convert markdown to HTML</li>
+              <li>Create categories and tags if they don't exist</li>
+              <li>Set featured image, SEO metadata (Yoast compatible)</li>
+              <li>Optionally enable Elementor page builder support</li>
+              <li>Create the post as draft or publish immediately</li>
+            </ul>
+          </li>
+        </ol>
+      </div>
+
+      <!-- Features -->
+      <div class="section mt-4">
+        <h3>Features</h3>
+        <ul
+          style="
+            line-height: 1.8;
+            padding-left: 1.5rem;
+            color: var(--text-secondary);
+          "
+        >
+          <li class="mb-1">✅ Markdown to WordPress HTML conversion</li>
+          <li class="mb-1">✅ Automatic image uploads with alt text</li>
+          <li class="mb-1">✅ SEO metadata (Yoast SEO compatible)</li>
+          <li class="mb-1">✅ Featured image support</li>
+          <li class="mb-1">✅ Categories and tags auto-creation</li>
+          <li class="mb-1">✅ Elementor page builder support</li>
+          <li class="mb-1">✅ Draft/Publish/Pending status options</li>
+        </ul>
+      </div>
     </div>
   </body>
 </html>
